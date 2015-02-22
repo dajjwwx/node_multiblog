@@ -1,0 +1,2 @@
+# node_multiblog
+使用Nodejs的Express开发的多人博客系统
