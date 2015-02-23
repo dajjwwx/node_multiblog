@@ -1,0 +1,9 @@
+<%- include ../layouts/header %>
+	<article>
+		<ul>
+			<% for(var i = 0; i < userlist.length; i++){ %>
+				<li><a href="#"><%= userlist[i].username %></a></li>
+			<% } %>
+		</ul>
+	</article>
+<%- include ../layouts/footer %>

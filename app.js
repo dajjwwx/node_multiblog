@@ -1,5 +1,13 @@
 var express = require('express');
 var path = require('path');
+
+var mongo = require("mongodb");
+
+
+
+//var MongoStore = require('connect-mongo')(express);
+//var settings = require('./settings');
+
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -24,6 +32,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user',user);
+
+/********************暂时不用***********************************
+app.use(express.session({
+	secret: settings.cookieSecret,
+	key: settings.db,
+	cookie: {maxAge:1000*60*60*24*30},
+	store: new MongoStore({
+		db:settings.db
+	}),
+}));
+*/
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
