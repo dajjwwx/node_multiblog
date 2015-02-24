@@ -3,9 +3,7 @@
  */
  module.exports = {
    cookieSecret: "MyBlog",
-   db:'multiblog',
+   db:'nodetest',
    host:'localhost'
  };
- 
-
 

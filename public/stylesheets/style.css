@@ -16,8 +16,7 @@ body {
   color: #333;
 }
 
-a{
-	color: #fff;
+a{	
 	text-decoration: none;
 }
 a:hover{
@@ -58,7 +57,9 @@ a:hover{
 	box-shadow: 0 -1px 0 #3e4b51 inset, 0 0 15px #384348 inset, 0 1px 1px #bbb;
 	border-bottom: 1px solid #373d40;
 	position: relative;
+	color: #fff;
 }
+
 #broadcast{
 	text-align:center;
 	font-size:14px;
@@ -114,11 +115,25 @@ a:hover{
 	display: inline-block;
 	padding: 10px 5px;
 }
+#navigator a{
+	color: #fff;
+}
+#navigator a:hover{
+	color: #f0f;
+}
+
 
 /** Footer **/
 footer{
-	padding:10px;
+	position:relative;
+	padding:10px 0px;
 	margin-top:20px;
 	position: absolute;
 	bottom: 10px;
+	width:100%;
+	text-align:center;
+}
+
+#copyright{
+	
 }

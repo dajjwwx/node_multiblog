@@ -4,7 +4,31 @@ var path = require('path');
 var mongo = require("mongodb");
 
 
+/**测试连接MongoDB***************************************************************
+var db = require('./models/db.js');
 
+db.open(function(err,database){
+	if(err){
+		throw err;
+	}else{
+		console.log("Connect to mongodb");
+		database.collection('usercollection',function(err,collection){
+			
+			var user = {"username":"newtestuser1","email":"hello@163.com"};
+			
+			collection.insert(user);
+			
+			collection.find(function(err,user){				
+				if(err){
+					throw err;
+				}else{
+					console.log(user);
+				}				
+			});
+		});
+	}
+});
+**************************************************************/
 //var MongoStore = require('connect-mongo')(express);
 //var settings = require('./settings');
 
@@ -15,6 +39,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var user = require('./routes/users');
+//var blog = require('./routes/blog');
 
 var app = express();
 
@@ -32,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user',user);
+//app.use('/blog', blog);
 
 /********************暂时不用***********************************
 app.use(express.session({
