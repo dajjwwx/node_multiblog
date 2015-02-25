@@ -4,15 +4,18 @@ function User(user){
 	this.name = user.name;
 	this.password = user.password;
 	this.email = user.email;
+	this.salt = user.salt;	//用于生成密码
 }
 
 module.export = User;
 
 User.prototype.save = function(callback){
 	var user = {
-		name: this.name;
-		password: this.password;
-		email: this.email;
+		name: this.name,
+		password: this.password,
+		email: this.email,
+		salt:this.salt
+		
 	};
 	
 	mongodb.open(function(err,db){
@@ -32,13 +35,12 @@ User.prototype.save = function(callback){
 				mongodb.close();
 				if(err){
 					return callback(err);
-				}
-				
+				}				
 				callback(null,user[0]);
 			});
 		});
 	});
-}
+};
 
 User.get = function(name,callback){
 	mongodb.open(function(err,db){
@@ -62,8 +64,8 @@ User.get = function(name,callback){
 				
 				callback(null,user);
 				
-			})
+			});
 			
 		});
 	});
-}
+};

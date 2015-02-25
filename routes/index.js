@@ -19,6 +19,14 @@ router.get('/register',function(req,res,next){
 	res.render('site/register',{ title: 'Express' });
 });
 
+router.post('/register',function(req,res){
+	var name = req.body.name,
+	password = req.body.password,
+	email = req.body.email,
+	re_password = req.body['re_password'];
+
+});
+
 
 router.get('/login',function(req,res,next){
 	res.render('site/login',{ title: 'Express' });
