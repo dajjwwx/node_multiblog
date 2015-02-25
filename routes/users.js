@@ -5,7 +5,7 @@ var mongodb = require('../models/db');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	
+	     
 	var db = require('../models/link');
 	
 	var collection = db.get('usercollection');

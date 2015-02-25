@@ -3,34 +3,9 @@ var path = require('path');
 
 var mongo = require("mongodb");
 
-
-/**测试连接MongoDB***************************************************************
-var db = require('./models/db.js');
-
-db.open(function(err,database){
-	if(err){
-		throw err;
-	}else{
-		console.log("Connect to mongodb");
-		database.collection('usercollection',function(err,collection){
-			
-			var user = {"username":"newtestuser1","email":"hello@163.com"};
-			
-			collection.insert(user);
-			
-			collection.find(function(err,user){				
-				if(err){
-					throw err;
-				}else{
-					console.log(user);
-				}				
-			});
-		});
-	}
-});
-**************************************************************/
 //var MongoStore = require('connect-mongo')(express);
-//var settings = require('./settings');
+var settings = require('./settings');
+var flash = require('connect-flash');
 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
