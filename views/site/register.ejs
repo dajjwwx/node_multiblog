@@ -1,30 +1,91 @@
 <%- include ../layouts/header %>
+
+	<link rel="stylesheet" href="/jqueryPlugins/poshytip-1.2/src/tip-violet/tip-violet.css" type="text/css" />
+	<script type="text/javascript" src="/jqueryPlugins/poshytip-1.2/src/jquery.poshytip.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+		
+			$('#demo-basic').poshytip({
+				className:'tip-violet'
+			});
+		
+		
+	
+		    $("form :input.required").each(function(){
+	            var $required = $("<span class='high'> *</span>"); //创建元素
+	            $(this).parent().append($required); //然后将它追加到文档中
+	        });
+	         //文本框失去焦点后
+	        $('form :input').blur(function(){
+	             var $parent = $(this).parent();
+	             $parent.find(".formtips").remove();
+	             //验证用户名
+	             if( $(this).is('#username') ){
+	                    if( this.value=="" || this.value.length < 6 ){
+	                        var errorMsg = '请输入至少6位的用户名.';
+	                        $parent.append('<span class="formtips onError">'+errorMsg+'</span>');
+	                    }else{
+	                        var okMsg = '输入正确.';
+	                        $parent.append('<span class="formtips onSuccess">'+okMsg+'</span>');
+	                    }
+	             }
+	             //验证邮件
+	             if( $(this).is('#email') ){
+	                if( this.value=="" || ( this.value!="" && !/.+@.+\.[a-zA-Z]{2,4}$/.test(this.value) ) ){
+	                      var errorMsg = '请输入正确的E-Mail地址.';
+	                      $parent.append('<span class="formtips onError">'+errorMsg+'</span>');
+	                }else{
+	                      var okMsg = '输入正确.';
+	                      $parent.append('<span class="formtips onSuccess">'+okMsg+'</span>');
+	                }
+	             }
+	        }).keyup(function(){
+	           $(this).triggerHandler("blur");
+	        }).focus(function(){
+	             $(this).triggerHandler("blur");
+	        });//end blur	
+		
+		
+			$("#registerButton").click(function(){
+								
+				var data = {
+					name: $("#name").val(),
+					password: $("#password").val(),
+					re_password: $("#re_password").val(),
+					email: $("#email").val()
+				};								
+				console.log(data);						
+			});
+		});
+	</script>
 	<section id="register" class="form">
 		<header class="form-header">
 			<h1>用户注册</h1>
 		</header>
+		<a id="demo-basic" title="Hey, there! This is a tooltip." href="#">Hover for a tooltip</a>
 		<form id="register-form" class="clear" action="/register" method="post">
 			<div class="form-item">
 				<label for="username">用户名：</label>
-				<input type="text" name="username" id="username" placeholder="用户名" />
+				<input type="text" name="name" id="name" placeholder="用户名" class="required" />
 			</div>
 			<div class="form-item">
 				<label for="username">邮&nbsp;&nbsp;箱：</label>
-				<input type="text" name="username" id="username" placeholder="邮箱" />
+				<input type="text" name="email" id="email" placeholder="邮箱" class="required" />
 			</div>
 			<div class="form-item">
 				<label for="username">密&nbsp;&nbsp;码：</label>
-				<input type="password" name="username" id="username"  placeholder="设置您的登录密码"/>
+				<input type="password" name="password" id="password"  placeholder="设置您的登录密码" class="required" />
 			</div>
 			<div class="form-item">
 				<label for="username">确认密码：</label>
-				<input type="password" name="username" id="username"  placeholder="确认一下您的密码"/>
+				<input type="password" name="re_password" id="re_password" placeholder="确认一下您的密码" class="required" />
 			</div>
-			<div class="form-item">
+			<div class="form-item">			
 				<div class="right">
-					<a href="#" class="a-btn">
-						<span class="a-btn-text">注册帐号>></span> 
-						<span class="a-btn-slide-text"><a href="#">Get a account</a></span>
+					<a href="javascript:void(0);" class="a-btn">
+						<span class="a-btn-text" id="registerButton">&nbsp;&nbsp;注册帐号>></span> 
+						<span class="a-btn-slide-text">没有帐号？</span>
 						<span class="a-btn-icon-right"><span></span></span>
 					</a>
 				</div>

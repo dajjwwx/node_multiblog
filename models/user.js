@@ -7,7 +7,7 @@ function User(user){
 	this.salt = user.salt;	//用于生成密码
 }
 
-module.export = User;
+module.exports = User;
 
 User.prototype.save = function(callback){
 	var user = {
