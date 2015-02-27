@@ -2,7 +2,7 @@
  * New node file
  */
  module.exports = {
-   cookieSecret: "MyBlog",
+   cookieSecret: "blog_session",
    db:'multiblog',
    host:'localhost'
  };

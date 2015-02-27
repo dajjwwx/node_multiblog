@@ -2,14 +2,18 @@ var express = require('express');
 var path = require('path');
 
 var mongo = require("mongodb");
+var session  = require('express-session');
+var MongoStore = require('connect-mongostore')(session);
 
-//var MongoStore = require('connect-mongo')(express);
+
+
 var settings = require('./settings');
 var flash = require('connect-flash');
 
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
@@ -21,6 +25,25 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+
+/********************SESSION  BEGIN***********************************/
+app.use(session({
+	secret: settings.cookieSecret,
+	key: settings.db,
+	cookie: {maxAge:1000*60*60*24*30},
+	store: new MongoStore({
+		db:settings.db
+	}),
+//	proxy: true,
+	resave: true,
+	saveUninitialized: true,
+}));
+
+
+/************************SESSION END**********************************************/
+
 
 app.use(flash());
 
@@ -36,16 +59,17 @@ app.use('/', routes);
 app.use('/user',user);
 //app.use('/blog', blog);
 
-/********************暂时不用***********************************
-app.use(express.session({
-	secret: settings.cookieSecret,
-	key: settings.db,
-	cookie: {maxAge:1000*60*60*24*30},
-	store: new MongoStore({
-		db:settings.db
-	}),
-}));
-*/
+
+app.use(function(req,res,next){
+	var ss = req.session;
+	if(ss.views){
+		ss.views++;		
+	}else{
+		ss.views = 1;
+	}	
+	console.log('views is '+ss.views);
+	next();
+});
 
 
 // catch 404 and forward to error handler

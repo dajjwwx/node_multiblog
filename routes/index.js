@@ -7,7 +7,12 @@ Util = require('../helpers/util');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('site/index', { title: 'Express' });
+
+	var views = req.session.views;
+	
+	req.session.h = "Hello";
+	
+  res.render('site/index', { title: 'Express' + views + req.session.h});
 });
 
 router.get('/users/index',function(req,res,next){

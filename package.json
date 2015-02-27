@@ -1,6 +1,6 @@
 {
   "name": "multiblog",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -16,11 +16,11 @@
     "express-session":"*",
     "mongodb":"*",
     "monk":"*",
-    "connect-mongo":"*",
+    "connect-mongostore":"*",
     "connect-flash":"*"
   },
   "main": "app.js",
   "devDependencies": {},
-  "author": "",
+  "author": "blueidea",
   "license": "ISC"
 }

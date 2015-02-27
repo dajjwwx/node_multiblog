@@ -57,7 +57,11 @@
 					password: $("#password").val(),
 					re_password: $("#re_password").val(),
 					email: $("#email").val()
-				};								
+				};	
+
+				$.post('/register',data,function(result){
+					console.log(result);
+				});
 				console.log(data);						
 			});
 		});
@@ -84,6 +88,10 @@
 				<label for="username">确认密码：</label>
 				<input type="password" name="re_password" id="re_password" placeholder="确认一下您的密码" class="required" />
 			</div>
+			<div class="form-item">
+				<input type="submit" value="Submit"/>
+			</div>
+			
 			<div class="form-item">			
 				<div class="right">
 					<a href="javascript:void(0);" class="a-btn">
