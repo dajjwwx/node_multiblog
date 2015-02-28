@@ -4,6 +4,9 @@ var crypto = require('crypto');
 User = require('../models/user.js');
 
 Util = require('../helpers/util');
+Auth = require('../helpers/auth.js');
+
+
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -14,6 +17,7 @@ router.get('/', function(req, res) {
 		error: req.flash('error').toString()});
 });
 
+router.get('/register',Auth.checkNotLogin(req,res,next));
 router.get('/register',function(req,res,next){	
 	
 	res.render('site/register',{ 
@@ -24,6 +28,7 @@ router.get('/register',function(req,res,next){
 	 });
 });
 
+router.post('/register',Auth.checkNotLogin(req,res,next));
 router.post('/register',function(req,res){
 	var name = req.body.name,
 	password = req.body.password,
@@ -70,6 +75,7 @@ router.post('/register',function(req,res){
 });
 
 
+router.get('/login',Auth.checkNotLogin(req,res,next));
 router.get('/login',function(req,res,next){
 	res.render('site/login',{
 		title: '注册',
@@ -78,6 +84,7 @@ router.get('/login',function(req,res,next){
 		error: req.flash('error').toString()});
 });
 
+router.post('/login',Auth.checkNotLogin(req,res,next));
 router.post('/login',function(req,res){
 	
 	var name = req.body.name,
@@ -105,7 +112,7 @@ router.post('/login',function(req,res){
 	});	
 	
 });
-
+router.get('/logout',Auth.checkNotLogin(req,res,next));
 router.get('/logout',function(req,res,next){
 	
 	req.session.user = null;
