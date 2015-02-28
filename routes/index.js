@@ -72,7 +72,7 @@ router.post('/register',function(req,res){
 
 router.get('/login',function(req,res,next){
 	res.render('site/login',{
-		title: 'Express',	title: '注册',
+		title: '注册',
 		user: req.session.user,
 		success: req.flash('success').toString(),
 		error: req.flash('error').toString()});
@@ -81,28 +81,35 @@ router.get('/login',function(req,res,next){
 router.post('/login',function(req,res){
 	
 	var name = req.body.name,
-		password = req.body.password;
+		password = req.body.password,
+		md5 = crypto.createHash('md5');		
 		
 	User.get(name,function(err,user){
-		if(err){
+		if(!user){
 			req.flash('error', '该用户不存在，请先注册！！');
-			res.redirect('/register');
+			return res.redirect('/login');
+		}
+		password = user.salt +  password;
+		password = md5.update(password).digest('hex');
+		
+		//检查密码是否一致
+		if(user.password != password){
+			req.flash('error','密码错误！！');
+			return res.redirect('/login');
 		}
 		
-		console.log(user.name);
+		req.session.user = user;
+		req.flash('success','登录成功！！');
+		res.redirect('/');	//登录成功后跳转到主页		
 		
-		
-	});
-		
-		
-		
-		
+	});	
 	
 });
 
 router.get('/logout',function(req,res,next){
 	
 	req.session.user = null;
+	req.flash('success','您已经退出登录！！');
 	res.redirect('/');
 	
 });
