@@ -1,0 +1,10 @@
+.icon{
+	background-position: right;
+	background-repeat: no-repeat;
+}
+.icon_ok{
+	background-image:url('/images/ok.gif');
+}
+.icon_no{
+	background-image:url('/images/no.gif');
+}
