@@ -1,21 +1,28 @@
 <%- include ../layouts/header %>
+	<script type="text/javascript">
+		$(function(){
+			$("#loginButton").click(function(){
+				$("#login-form").submit();
+			});
+		});
+	</script>
 	<section id="register" class="form">
 		<header class="form-header">
 			<h1>用户登陆</h1>
 		</header>
-		<form id="register-form" class="clear" action="/register" method="post">
+		<form id="login-form" class="clear" action="/register" method="post">
 			<div class="form-item">
-				<label for="username">用户名：</label>
-				<input type="text" name="username" id="username" placeholder="用户名/注册邮箱" />
+				<label for="name">用户名：</label>
+				<input type="text" name="name" id="name" placeholder="用户名/注册邮箱" />
 			</div>
 			<div class="form-item">
 				<label for="username">密&nbsp;&nbsp;码：</label>
-				<input type="password" name="username" id="username" placeholder="登录密码" />
+				<input type="password" name="password" id="password" placeholder="登录密码" />
 			</div>
 
 			<div class="form-item">
 				<div class="right">
-					<a href="#" class="a-btn">
+					<a href="#" class="a-btn" id="loginButton">
 						<span class="a-btn-text">&nbsp;&nbsp;登&nbsp;&nbsp;录&nbsp;&nbsp;</span> 
 						<span class="a-btn-slide-text">没有帐号？</span>
 						<span class="a-btn-icon-right"><span></span></span>

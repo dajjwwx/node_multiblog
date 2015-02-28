@@ -5,10 +5,6 @@
 
 	<script type="text/javascript">
 		$(function(){
-		
-			$('#demo-basic').poshytip({
-				className:'tip-violet'
-			});
 			
 			$("form :input").attr({'autocomplete':'off'});			
 	
@@ -16,7 +12,15 @@
 		    	var label = $(this).prev();		    	
 		    	text = label.text().replace(/：/g,'*:');		    	
 		    	label.text(text);
-	        });
+	        }).poshytip({
+				className:'tip-violet',
+				showOn: 'focus',
+				alignTo: 'target',
+				alignX: 'right',
+				alignY: 'center',
+				offsetX: 5,
+				showTimeout: 100
+			});
 	         //文本框失去焦点后
 	        $('form :input').blur(function(){
 	             var $parent = $(this).parent();
@@ -48,21 +52,18 @@
 	        });//end blur	
 		
 		
-			$("#registerButton").click(function(){
-			
-				$("#demo-basic").trigger('hover');
+			$("#registerButton").click(function(){			
+		
+				$("form :input.required").trigger('blur');
+                var numError = $('form .onError').length;
+                if(numError){
+                    return false;
+                } 
+                alert("注册成功,密码已发到你的邮箱,请查收.");
+				
+				$("#register").submit();
 								
-				var data = {
-					name: $("#name").val(),
-					password: $("#password").val(),
-					re_password: $("#re_password").val(),
-					email: $("#email").val()
-				};	
-
-				$.post('/register',data,function(result){
-					console.log(result);
-				});
-				console.log(data);						
+					
 			});
 		});
 	</script>
@@ -74,22 +75,28 @@
 		<form id="register-form" class="clear" action="/register" method="post">
 			<div class="form-item">
 				<label for="username">用户名：</label>
-				<input type="text" name="name" id="name" placeholder="用户名" class="required" />
+				<input type="text" name="name" id="name" placeholder="用户名" class="required" title="用户名只能用a-zA-X0-9_字符" />
 			</div>
 			<div class="form-item">
 				<label for="username">邮&nbsp;&nbsp;箱：</label>
-				<input type="text" name="email" id="email" placeholder="邮箱" class="required" />
+				<input type="text" name="email" id="email" placeholder="邮箱" class="required" title="请输入用户邮箱" />
 			</div>
 			<div class="form-item">
 				<label for="username">密&nbsp;&nbsp;码：</label>
-				<input type="password" name="password" id="password"  placeholder="设置您的登录密码" class="required" />
+				<input type="password" name="password" id="password"  placeholder="设置您的登录密码" class="required" title="请设置您的登录密码" />
 			</div>
 			<div class="form-item">
 				<label for="username">确认密码：</label>
-				<input type="password" name="re_password" id="re_password" placeholder="确认一下您的密码" class="required" />
+				<input type="password" name="re_password" id="re_password" placeholder="确认一下您的密码" class="required" title="请确认一下您的登录密码是否输入正确" />
 			</div>
 			<div class="form-item">
-				<input type="submit" value="Submit"/>
+					<div class="right">
+					<a href="javascript:void(0);" class="a-btn">
+						<input  class="a-btn-text" type="submit" value="注册帐号>>" style="background:none;border:none;cursor:pointer;"/>
+						<span class="a-btn-slide-text">没有帐号？</span>
+						<span class="a-btn-icon-right"><span></span></span>
+					</a>
+				</div>				
 			</div>
 			
 			<div class="form-item">			

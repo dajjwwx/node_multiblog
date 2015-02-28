@@ -6,32 +6,22 @@ User = require('../models/user.js');
 Util = require('../helpers/util');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-
-	var views = req.session.views;
-	
-	req.session.h = "Hello";
-	
-  res.render('site/index', { title: 'Express' + views + req.session.h});
+router.get('/', function(req, res) {
+  res.render('site/index', { 
+  		title: '主页',
+		user: req.session.user,
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()});
 });
 
-router.get('/users/index',function(req,res,next){
+router.get('/register',function(req,res,next){	
 	
-	var ss = req.query.q + "--" + req.query.shoe.color;
-	
-	var sss = req.param("q") + req.param("shoe").color;
-	
-	res.send("Querying Info:" + ss + "+++" + sss);
-});
-
-router.get('/register',function(req,res,next){
-	
-	
-	var string = Util.getRandomString(4);
-	
-	console.log(string);
-	
-	res.render('site/register',{ title: 'Express' });
+	res.render('site/register',{ 
+		title: '注册',
+		user: req.session.user,
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()
+	 });
 });
 
 router.post('/register',function(req,res){
@@ -81,7 +71,40 @@ router.post('/register',function(req,res){
 
 
 router.get('/login',function(req,res,next){
-	res.render('site/login',{ title: 'Express' });
+	res.render('site/login',{
+		title: 'Express',	title: '注册',
+		user: req.session.user,
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()});
+});
+
+router.post('/login',function(req,res){
+	
+	var name = req.body.name,
+		password = req.body.password;
+		
+	User.get(name,function(err,user){
+		if(err){
+			req.flash('error', '该用户不存在，请先注册！！');
+			res.redirect('/register');
+		}
+		
+		console.log(user.name);
+		
+		
+	});
+		
+		
+		
+		
+	
+});
+
+router.get('/logout',function(req,res,next){
+	
+	req.session.user = null;
+	res.redirect('/');
+	
 });
 
 router.post('/form',function(req,res){
