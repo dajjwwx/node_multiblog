@@ -13,12 +13,14 @@ var flash = require('connect-flash');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
-
 var bodyParser = require('body-parser');
+
+var multiparty = require('connect-multiparty');//文件上传中间件
+
 
 var routes = require('./routes/index');
 var user = require('./routes/users');
-//var blog = require('./routes/blog');
+var blog = require('./routes/blog');
 
 var app = express();
 
@@ -50,14 +52,16 @@ app.use(flash());
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multiparty({keepExtensions:true, uploadDir: './public/uploads'}));//配置文件上传中间件
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user',user);
-//app.use('/blog', blog);
+app.use('/blog', blog);
 
 
 app.use(function(req,res,next){
@@ -104,5 +108,9 @@ app.use(function(err, req, res, next) {
     });
 });
 
+//为使用supervisor，在上线之前
+//module.exports = app;
 
-module.exports = app;
+var server = app.listen(3000,function(){
+	console.log('Express server listening op port + '+ 3000);
+});

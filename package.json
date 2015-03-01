@@ -17,7 +17,9 @@
     "mongodb":"*",
     "monk":"*",
     "connect-mongostore":"*",
-    "connect-flash":"*"
+    "connect-flash":"*",
+    "markdown":"*",
+    "connect-multiparty":"*"
   },
   "main": "app.js",
   "devDependencies": {},

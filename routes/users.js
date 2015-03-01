@@ -3,15 +3,25 @@ var router = express.Router();
 
 var mongodb = require('../models/db');
 
+User = require('../models/user.js');
+
+Util = require('../helpers/util');
+Auth = require('../helpers/auth.js');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	     
-	var db = require('../models/link');
-	
-	var collection = db.get('usercollection');
-	collection.find({},{},function(err,docs){
-		res.render('user/index',{userlist:docs});
-	});  	
+	User.get(null,function(err,users){
+		
+		if(err){
+			console.log(err);
+		}
+		
+		for(var i in users){
+			console.log(users[i].name);
+		}
+		
+	});
 });
 
 router.get('/hello',function(req,res,next){

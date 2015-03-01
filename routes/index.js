@@ -126,19 +126,12 @@ router.post('/login',function(req,res,next){
 
 router.get('/logout',function(req,res,next){
 	
-//	Auth.checkNotLogin(req,res,next);
+	Auth.checkLogin(req,res,next);
 	
 	req.session.user = null;
 	req.flash('success','您已经退出登录！！');
 	res.redirect('/');
 	
-});
-
-router.post('/form',function(req,res){
-	
-	var ss = req.body.username + "--" + req.body.password;
-
-	res.send("Querying Info:" + ss);
 });
 
 module.exports = router;
