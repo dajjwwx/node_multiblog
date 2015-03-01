@@ -68,6 +68,7 @@ app.use(function(req,res,next){
 		ss.views = 1;
 	}	
 	console.log('views is '+ss.views);
+
 	next();
 });
 

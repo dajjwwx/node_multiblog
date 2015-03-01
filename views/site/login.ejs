@@ -1,6 +1,9 @@
 <%- include ../layouts/header %>
 	<script type="text/javascript">
 		$(function(){
+		
+			$("form :input").attr('autocomplete','off');
+		
 			$("#loginButton").click(function(){
 				$("#login-form").submit();
 			});
@@ -10,7 +13,7 @@
 		<header class="form-header">
 			<h1>用户登陆</h1>
 		</header>
-		<form id="login-form" class="clear" action="/register" method="post">
+		<form id="login-form" class="clear" action="/login" method="post">
 			<div class="form-item">
 				<label for="name">用户名：</label>
 				<input type="text" name="name" id="name" placeholder="用户名/注册邮箱" />

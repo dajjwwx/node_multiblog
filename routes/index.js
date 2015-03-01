@@ -4,17 +4,26 @@ var crypto = require('crypto');
 User = require('../models/user.js');
 
 Util = require('../helpers/util');
+Auth = require('../helpers/auth.js');
+
+
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('site/index', { 
+	
+
+	
+	res.render('site/index', { 
   		title: '主页',
 		user: req.session.user,
 		success: req.flash('success').toString(),
 		error: req.flash('error').toString()});
 });
 
+
 router.get('/register',function(req,res,next){	
+
+	Auth.checkNotLogin(req,res,next);	
 	
 	res.render('site/register',{ 
 		title: '注册',
@@ -25,6 +34,9 @@ router.get('/register',function(req,res,next){
 });
 
 router.post('/register',function(req,res){
+	
+	Auth.checkNotLogin(req,res,next);
+	
 	var name = req.body.name,
 	password = req.body.password,
 	email = req.body.email,
@@ -71,38 +83,53 @@ router.post('/register',function(req,res){
 
 
 router.get('/login',function(req,res,next){
+	
+	Auth.checkNotLogin(req,res,next);
+	
 	res.render('site/login',{
-		title: 'Express',	title: '注册',
+		title: '注册',
 		user: req.session.user,
 		success: req.flash('success').toString(),
 		error: req.flash('error').toString()});
 });
 
-router.post('/login',function(req,res){
+
+router.post('/login',function(req,res,next){
+	
+	Auth.checkNotLogin(req,res,next);
 	
 	var name = req.body.name,
-		password = req.body.password;
+		password = req.body.password,
+		md5 = crypto.createHash('md5');		
 		
 	User.get(name,function(err,user){
-		if(err){
+		if(!user){
 			req.flash('error', '该用户不存在，请先注册！！');
-			res.redirect('/register');
+			return res.redirect('/login');
+		}
+		password = user.salt +  password;
+		password = md5.update(password).digest('hex');
+		
+		//检查密码是否一致
+		if(user.password != password){
+			req.flash('error','密码错误！！');
+			return res.redirect('/login');
 		}
 		
-		console.log(user.name);
+		req.session.user = user;
+		req.flash('success','登录成功！！');
+		res.redirect('/');	//登录成功后跳转到主页		
 		
-		
-	});
-		
-		
-		
-		
+	});	
 	
 });
 
 router.get('/logout',function(req,res,next){
 	
+//	Auth.checkNotLogin(req,res,next);
+	
 	req.session.user = null;
+	req.flash('success','您已经退出登录！！');
 	res.redirect('/');
 	
 });
