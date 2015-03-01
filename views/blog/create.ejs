@@ -1,0 +1,41 @@
+<%- include ../layouts/header %>
+	<script type="text/javascript">
+		$(function(){
+		
+			$("form :input").attr('autocomplete','off');
+		
+			$("#loginButton").click(function(){
+				$("#create-blog-form").submit();
+			});
+		});
+	</script>
+	<section id="create-blog" class="form">
+		<header class="form-header">
+			<h1>发布文章</h1>
+		</header>
+		<form id="create-blog-form" class="clear" action="/blog/create" method="post">
+			<div class="form-item">
+				<label for="title">标题：</label>
+				<input type="text" name="title" id="title" placeholder="文章标题" />
+			</div>
+			<div class="form-item">
+				<label for="content">内容：</label>
+				<textarea name="content" id="content" placeholder="文章内容"></textarea>
+			</div>
+			<div class="form-item">
+				<label for="tag">标签：</label>
+				<input type="text" name="tag" id="tag" placeholder="标签" />
+			</div>
+
+			<div class="form-item">
+				<div class="right">
+					<a href="#" class="a-btn" id="loginButton">
+						<span class="a-btn-text">&nbsp;&nbsp;登&nbsp;&nbsp;录&nbsp;&nbsp;</span> 
+						<span class="a-btn-slide-text">没有帐号？</span>
+						<span class="a-btn-icon-right"><span></span></span>
+					</a>
+				</div>
+			</div>
+		</form>
+	</section>	
+<%- include ../layouts/footer %>
