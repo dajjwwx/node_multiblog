@@ -1,8 +1,8 @@
-<%- include ../layouts/header %>
+﻿<%- include ../layouts/header %>
 
 	<% posts.forEach(function(post, index){ %>
 	<div class="post">
-		<p><h2><a href="/blog/u/<%= post.owner %>/<%= post.time.day %>/<%=post.title %>"><%= post.title %></a></h2></p>
+		<p><h2><a href="/blog/u/<%= post.name %>/<%= post.time.day %>/<%=post.title %>"><%= post.title %></a></h2></p>
 		<p class="info">
 			作者：<a href="#"><%= post.owner %></a>
 			日期：<%= post.time.minute %>		

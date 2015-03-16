@@ -8,10 +8,9 @@ Post = require('../models/post.js');
 Auth = require('../helpers/auth.js');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {	
-
+router.get('/', function(req, res, next) {
 	
-	Post.get(null,function(err, posts){
+	Post.getAll(null,function(err, posts){
 		
 		if(err){
 			posts = [];
@@ -116,14 +115,55 @@ router.post('/upload',function(req, res, next){
 			console.log('Successfully removed an empty file');
 			
 		}else{
-			var target_path = './public/upload/' + req.files[i].name;
+			var target_path = './public/uploads/' + req.files[i].name;
 			fs.renameSync(req.files[i].path, target_path);
 			console.log('Successfully renamed a file');
 		}
 	}
-// 	
-	// req.flash('success','文件上传成功！');
-	// res.redirect('/blog/upload');
+
+	req.flash('success','文件上传成功！');
+	res.redirect('/blog/upload');
+});
+
+router.get('/u/:name',function(req, res){
+	//检查用户是否存在
+	User.get(req,params.name, function(err,user){
+		if(!user){
+			req.flash('error', '用户不存在');
+			return res.redirect('/blog/index');
+		}
+	});
+	
+	//查询并返回该用户的所有文章
+	Post.getAll(user.name, function(err, posts){
+		if(err){
+			req.flash('error',err);
+			return res.redirect('/blog/index');
+		}
+		res.render('blog/user',{
+			title: user.name,
+			posts: posts,
+			user: req.session.user,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
+	});
+});
+
+router.get('/u/:name/:day/:title',function(req,res){
+	Post.getOne(req.params.name, req.params.day, req.params.title, function(err,post){
+		if(err){
+			req.flash('error',err);
+			return res.redirect('/blog/index');
+		}
+		res.render('blog/article',{
+			title: req.params.title,
+			post: post,
+			user: req.session.user,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
+	});
 });
 
 
